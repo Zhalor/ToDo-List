@@ -5,12 +5,15 @@
 }
 
 :root {
-  --font-color: #14C7C3;
-  --background: #1F1F1F;
+  --teal: #14c7c4;
+  --grey: #1F1F1F;
+  --dark-grey: #0e0e0e;
+  --light-grey: #383838;
+  --red: #ff3838c2;
 }
 
 body {
-  background-color: black;
+  background-color: var(--dark-grey);
   padding: 20px;
   height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
@@ -24,9 +27,12 @@ body {
   gap: 20px;
 }
 
-.container div {
-  background-color: var(--background);
-  color: var(--font-color);
+.projects-title,
+.todos-title,
+.projects-container,
+.todos-container {
+  background-color: var(--grey);
+  color: var(--teal);
   border-radius: 3px;
 }
 
@@ -41,9 +47,9 @@ body {
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background-color: var(--background);
-  border: 2px solid var(--font-color);
-  color: var(--font-color);
+  background-color: var(--grey);
+  border: 2px solid var(--teal);
+  color: var(--teal);
   font-size: 1.5rem;
 }
 
@@ -61,20 +67,61 @@ body {
 }
 
 .projects-container {
-  padding: 3px 0px;
+  padding: 5px 8px;
 }
 
 .project {
   margin-top: 10px;
   text-align: center;
-  background-color: #383838;
+  background-color: var(--light-grey);
+  border-radius: 5px;
+  padding: 5px;
+  font-weight: bold;
 }
 
-.click-effects:hover {
+.todos-container {
+  padding: 5px 8px;
+  
+}
+
+.todo {
+  display: flex;
+  position: relative;
+  gap: 15px;
+  margin-top: 10px;
+  background-color: var(--light-grey);
+  border-radius: 5px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  background-color: var(--grey-light);
+  width: 18px;
+  height: 18px;
+  border: none;
+  color: var(--red);
+  font-weight: bold;
+}
+
+.close:hover {
+  color: #ff1f1f;
+  transform: scale(1.1);
+}
+
+.close:active {
+  transform: scale(.95);
+}
+
+.all-effects:hover,
+.hover-effect:hover {
   color: orange;
   border-color: orange;
+  cursor: pointer;
 }
 
-.click-effects:active {
+.all-effects:active {
   transform: scale(.95);
 }
