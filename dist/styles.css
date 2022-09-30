@@ -13,16 +13,57 @@
 }
 
 body {
+  position: relative;
   background-color: var(--dark-grey);
-  padding: 20px;
+  padding: 30px;
   height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+body > button {
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  left: 30px;
+  top: 5px;
+  z-index: 1;
+}
+
+.todo-form-container {
+  position: absolute;
+  display: none;
+  z-index: 1;
+  top: 20%;
+  left: 0;
+  right: 0;
+  background-color: var(--dark-grey);
+  height: 300px;
+  width: 250px;
+  margin: 0 auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: 8px;
+}
+
+.form > label {
+  padding: 5px 0px;
+}
+
+.form > button {
+  margin-top: 15px;
+  padding: 5px;
+  width: fit-content;
+  align-self: center;
 }
 
 .container {
   display: grid;
   grid-template-rows: 65px minmax(600px, 100%);
-  grid-template-columns: minmax(200px, 15vw) minmax(500px, 85vw);
+  grid-template-columns: minmax(250px, 15vw) minmax(500px, 85vw);
   height: 100%;
   gap: 20px;
 }
@@ -71,33 +112,59 @@ body {
 }
 
 .project {
+  position: relative;
+  display: flex;
   margin-top: 10px;
-  text-align: center;
   background-color: var(--light-grey);
   border-radius: 5px;
   padding: 5px;
   font-weight: bold;
 }
 
+.project > p,
+.project > input {
+  flex: 1;
+  text-align: center;
+}
+
 .todos-container {
   padding: 5px 8px;
-  
 }
 
 .todo {
   display: flex;
   position: relative;
-  gap: 15px;
   margin-top: 10px;
   background-color: var(--light-grey);
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   font-weight: bold;
+}
+.todo > p {
+  border-left: 1px solid var(--grey);
+  border-right: 1px solid var(--grey);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.todo > p:first-of-type {
+  border-left: 2px solid var(--grey);
+}
+
+.todo > p:last-of-type {
+  border-right: 2px solid var(--grey);
+}
+
+.desc {
+  flex: 1;
+}
+
+.checkbox {
+  margin-left: 5px;
+  margin-right: 8px;
 }
 
 .close {
-  position: absolute;
-  right: 10px;
   background-color: var(--grey-light);
   width: 18px;
   height: 18px;
@@ -115,13 +182,13 @@ body {
   transform: scale(.95);
 }
 
-.all-effects:hover,
-.hover-effect:hover {
+.mouse-effect:hover {
   color: orange;
   border-color: orange;
+  transform: scale(1.02);
   cursor: pointer;
 }
 
-.all-effects:active {
-  transform: scale(.95);
+.mouse-effect:active {
+  transform: scale(.99);
 }

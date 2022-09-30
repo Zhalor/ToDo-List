@@ -1,0 +1,1 @@
+(()=>{document.getElementById("add-project-btn");const e=document.getElementById("add-todo-btn");document.getElementById("todo-form").addEventListener("submit",(e=>{e.preventDefault(),document.getElementById("todo-form-container").style.display="none"})),e.addEventListener("click",(e=>{document.getElementById("todo-form-container").style.display="block"}))})();

@@ -5,56 +5,105 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles.css">
-  <script src="./main.js"></script>
+  <script src="./main.js" defer></script>
   <title>ToDo List</title>
 </head>
 <body>
+
+  <div class="todo-form-container" id="todo-form-container">
+    <form action="" class="form" id="todo-form">
+      <label for="title">Title:</label>
+      <input type="text" name="title" id="title" minlength="4" maxlength="22" required>
+      <label for="desc">Description:</label>
+      <input type="text" name="desc" id="desc" maxlength="60">
+      <label for="due-date">Due Date:</label>
+      <input type="date" name="due-date" id="due-date" required>
+      <label for="priority">Priority</label>
+      <select name="priority" id="priority" required>
+        <option value="">--Choose priority--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+      <button type="submit">Create Task</button>
+    </form>
+  </div>
+
+  <!--<button>Light Mode</button>-->
+
   <div class="container" id="container">
+
     <div class="projects-title">
       <h1>Projects</h1>
-      <button class="add-btn all-effects">+</button>
+      <button class="add-btn mouse-effect" id="add-project-btn">+</button>
     </div>
+
     <div class="todos-title">
       <h1>Tasks</h1>
-      <button class="add-btn all-effects">+</button>
+      <button class="add-btn mouse-effect" id="add-todo-btn">+</button>
     </div>
+
     <div class="projects-container">
-     <p class="project hover-effect">Default</p>
-     <p class="project hover-effect">Clean Office</p>
-     <p class="project hover-effect">Complete Odin Project</p>
-     <p class="project hover-effect">Finish this website</p>
+     <div class="project">
+       <p class="mouse-effect">Default</p>
+       <button class="close">X</button>
+     </div>
+     <div class="project">
+        <p class="mouse-effect">Finish this site</p>
+        <button class="close">X</button>
+      </div>
+      <div class="project">
+        <p class="mouse-effect">Complete Odin Project</p>
+        <button class="close">X</button>
+      </div>
+      <div class="project">
+        <label for="project"></label>
+        <input type="text" name="project" id="project" placeholder="Enter Project Name">
+        <button class="close">X</button>
+      </div>
     </div>
+
     <div class="todos-container">
       <div class="todo">
+        <label>Complete<input type="checkbox" name="complete" class="checkbox"></label>
         <p>Title</p>
-        <p>Description</p>
+        <p class="desc">Description</p>
         <p>Due Date</p>
         <p>Priority</p>
         <button class="close">X</button>
       </div>
       <div class="todo">
+        <label>Complete<input type="checkbox" name="complete" class="checkbox"></label>
         <p>Title</p>
-        <p>Description</p>
+        <p class="desc">Description</p>
         <p>Due Date</p>
         <p>Priority</p>
+        <button class="close">X</button>
       </div>
       <div class="todo">
+        <label>Complete<input type="checkbox" name="complete" class="checkbox"></label>
         <p>Title</p>
-        <p>Description</p>
+        <p class="desc">Description</p>
         <p>Due Date</p>
         <p>Priority</p>
+        <button class="close">X</button>
       </div>
       <div class="todo">
+        <label>Complete<input type="checkbox" name="complete" class="checkbox"></label>
         <p>Title</p>
-        <p>Description</p>
+        <p class="desc">Description</p>
         <p>Due Date</p>
         <p>Priority</p>
+        <button class="close">X</button>
       </div>
       <div class="todo">
+        <label>Complete<input type="checkbox" name="complete" class="checkbox"></label>
         <p>Title</p>
-        <p>Description</p>
+        <p class="desc">Description</p>
         <p>Due Date</p>
         <p>Priority</p>
+        <button class="close">X</button>
       </div>
     </div>
   </div>
