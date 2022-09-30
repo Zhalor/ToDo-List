@@ -114,6 +114,7 @@ body > button {
 .project {
   position: relative;
   display: flex;
+  align-items: center;
   margin-top: 10px;
   background-color: var(--light-grey);
   border-radius: 5px;
@@ -125,6 +126,24 @@ body > button {
 .project > input {
   flex: 1;
   text-align: center;
+  height: 20px;
+}
+
+.default-project {
+  margin-right: 20px;
+}
+
+.project > input {
+  outline: none;
+  border: 1px solid var(--light-grey);
+}
+
+.project > input:focus {
+  border: 1px solid var(--teal);
+}
+
+.project > .input-error {
+  border: 1px solid red;
 }
 
 .todos-container {
@@ -164,13 +183,30 @@ body > button {
   margin-right: 8px;
 }
 
-.close {
+.close-btn {
   background-color: var(--grey-light);
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border: none;
   color: var(--red);
   font-weight: bold;
+}
+
+.create-project-btn {
+  border: 1px solid var(--teal);
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  margin-left: 5px;
+  padding: 2px;
+  background-color: none;
+  transition-property: background-color, transform;
+  transition-duration: .5s;
+}
+
+.create-project-btn:hover {
+  background-color: var(--teal);
+  transform: scale(1.1);
 }
 
 .close:hover {

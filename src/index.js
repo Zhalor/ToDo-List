@@ -1,4 +1,6 @@
-const addProjectBtn = document.getElementById('add-project-btn');
+import { createProjectForm } from "./DOM";
+
+const projectBtn = document.getElementById('add-project-btn');
 const addTodoBtn = document.getElementById('add-todo-btn');
 const toDoForm = document.getElementById('todo-form');
 
@@ -9,4 +11,8 @@ toDoForm.addEventListener('submit', (e) => {
 
 addTodoBtn.addEventListener('click', (e) => {
   document.getElementById('todo-form-container').style.display = 'block';
+});
+
+projectBtn.addEventListener('click', () => {
+  createProjectForm();
 });
