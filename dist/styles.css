@@ -29,7 +29,7 @@ body > button {
   z-index: 1;
 }
 
-.todo-form-container {
+.task-form-container {
   position: absolute;
   display: none;
   z-index: 1;
@@ -69,9 +69,9 @@ body > button {
 }
 
 .projects-title,
-.todos-title,
+.task-title,
 .projects-container,
-.todos-container {
+.task-container {
   background-color: var(--grey);
   color: var(--teal);
   border-radius: 3px;
@@ -94,14 +94,14 @@ body > button {
   font-size: 1.5rem;
 }
 
-.todos-title {
+.task-title {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
-.todos-title > .add-btn {
+.task-title > .add-btn {
   position: absolute;
   right: 20px;
   top: 12px;
@@ -118,8 +118,9 @@ body > button {
   margin-top: 10px;
   background-color: var(--light-grey);
   border-radius: 5px;
-  padding: 5px;
   font-weight: bold;
+  height: 40px;
+  padding: 0px 8px;
 }
 
 .project > p,
@@ -146,31 +147,32 @@ body > button {
   border: 1px solid red;
 }
 
-.todos-container {
+.task-container {
   padding: 5px 8px;
 }
 
-.todo {
+.task {
   display: flex;
+  align-items: center;
   position: relative;
   margin-top: 10px;
   background-color: var(--light-grey);
   border-radius: 5px;
-  padding: 10px;
+  padding: 0px 8px;
   font-weight: bold;
+  height: 40px;
 }
-.todo > p {
+.task > p {
   border-left: 1px solid var(--grey);
   border-right: 1px solid var(--grey);
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 0px 8px;
 }
 
-.todo > p:first-of-type {
+.task > p:first-of-type {
   border-left: 2px solid var(--grey);
 }
 
-.todo > p:last-of-type {
+.task > p:last-of-type {
   border-right: 2px solid var(--grey);
 }
 

@@ -1,18 +1,19 @@
-import { createProjectForm } from "./DOM";
+import { createProjectForm, createTask } from "./DOM";
 
 const projectBtn = document.getElementById('add-project-btn');
-const addTodoBtn = document.getElementById('add-todo-btn');
-const toDoForm = document.getElementById('todo-form');
+const addTaskBtn = document.getElementById('add-task-btn');
+const taskForm = document.getElementById('task-form');
 
-toDoForm.addEventListener('submit', (e) => {
+taskForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  document.getElementById('todo-form-container').style.display = 'none';
+  createTask();
 })
 
-addTodoBtn.addEventListener('click', (e) => {
-  document.getElementById('todo-form-container').style.display = 'block';
+addTaskBtn.addEventListener('click', () => {
+  document.getElementById('task-form-container').style.display = 'block';
 });
 
 projectBtn.addEventListener('click', () => {
   createProjectForm();
 });
+
