@@ -1,58 +1,20 @@
 import { createProjectClass, createTaskClass, arrProjects } from "./logic.js";
 
-function createProjectForm( ){
+function createProject(nameValue) {
   const div = document.createElement('div');
-  const input = document.createElement('input');
-  const btn = document.createElement('button');
-
-  div.classList.add('project');
-  input.type = "text";
-  input.placeholder = "Enter Project Name";
-  btn.classList.add('create-project-btn');
-
-  document.getElementById('projects-container').appendChild(div);
-  div.append(input, btn);
-  document.getElementById('add-project-btn').disabled = true;
-
-  btn.addEventListener('click', () => {
-    if(input.value == "" || input.length > 18) {
-      input.classList.add('input-error')
-      input.placeholder = "Name must be 1 to 18 characters"
-    } else {
-      createProject(div);
-    }
-  });
-
-  input.addEventListener('keydown', (event) => {
-    if(event.key === "Enter") {
-      if(input.value == "" || input.length > 18) {
-        input.classList.add('input-error')
-        input.placeholder = "Name must be 1 to 18 characters"
-      } else {
-        createProject(div);
-      }
-    }
-  });
-}
-
-function createProject(div) {
   const p = document.createElement('p');
   const btn = document.createElement('button');
 
-  div.setAttribute('data-project-id', arrProjects.length);
+  div.classList.add('project');
+  div.setAttribute('data-project-index', arrProjects.length);
   p.classList.add('mouse-effect');
-  p.innerText = div.firstChild.value;
+  p.innerText = nameValue;
   btn.classList.add('close-btn');
   btn.innerText = "X";
   document.getElementById('add-project-btn').disabled = false;
-  const project = createProjectClass(p.innerText);
 
   p.addEventListener('click', () => {
-    const projects = document.querySelectorAll('.project');
-    for(let project of projects) {
-      project.classList.remove('open');
-      div.classList.add('open');
-    }
+    document.getElementById('task-form').dataset.projectIndex = div.dataset.projectIndex;
   });
 
   btn.addEventListener('click', () => {
@@ -63,19 +25,34 @@ function createProject(div) {
     div.removeChild(div.lastChild);
   }
 
+  document.getElementById('projects-container').appendChild(div);
   div.append(p, btn);
+
+  document.getElementById('task-form').dataset.projectIndex = div.dataset.projectIndex;
+  document.getElementById('project-form').reset();
+  document.getElementById('project-form-container').style.display = 'none';
+
+  const project = createProjectClass(p.innerText);
 }
 
 function deleteProject(div, project) {
+  let index = div.dataset.projectIndex;
   div.remove();
   project.removeProject();
+  if(index > 0) {
+    document.getElementById('task-form').dataset.projectIndex = index - 1;
+  }
+  const projectTasks = document.querySelectorAll(`div.task[data-project-index="${index}"]`);
+  for(let task of projectTasks) {
+    task.remove();
+  }
   const projects = document.querySelectorAll('.project');
   for(let i in arrProjects) {
-    projects[i].setAttribute('data-project-id', i);
+    projects[i].setAttribute('data-project-index', i);
   }
 }
 
-function createTask() {
+function createTask(projectIndex) {
   const div = document.createElement('div');
   const label = document.createElement('label');
   const input = document.createElement('input');
@@ -91,6 +68,7 @@ function createTask() {
   let priorityValue = document.getElementById('priority').value;
 
   div.classList.add('task');
+  div.setAttribute('data-project-index', projectIndex);
   label.innerText = "Unfinished";
   input.type = "checkbox";
   input.classList.add('checkbox');
@@ -103,7 +81,7 @@ function createTask() {
   btn.innerText = "X";
 
   btn.addEventListener('click', () => {
-    deleteTask(div);
+    deleteTask(div, task);
   })
 
   document.getElementById('task-container').appendChild(div);
@@ -113,11 +91,15 @@ function createTask() {
   document.getElementById('task-form').reset();
   document.getElementById('task-form-container').style.display = 'none';
 
-  createTaskClass(titleValue, descValue, dueDateValue, priorityValue, false, );
+  const task = createTaskClass(titleValue, descValue, dueDateValue, priorityValue, false, projectIndex);
 }
 
-function deleteTask(div) {
+function deleteTask(div, task) {
+  let index = div.dataset.projectIndex;
   div.remove();
+  arrProjects[index].removeTask(task);
 }
 
-export { createProjectForm, createTask }
+createProject("Default");
+
+export { createProject, createTask }

@@ -1,28 +1,25 @@
-const arrProjects = [
-  {
-    title: "Default",
-    todos: []
-  }]
+const arrProjects = []
 
 class Project {
   constructor(title) {
     this.title = title;
-    this.todos = [];
+    this.tasks = [];
   }
-  removeProject(project) {
-    arrProjects.splice(arrProjects.indexOf(project), 1);
+  removeProject() {
+    arrProjects.splice(arrProjects.indexOf(this), 1);
   }
   
-  addTodo(todo) {
-    this.todos.push(todo);
+  addTask(task) {
+    console.log(this.tasks);
+    this.tasks.push(task);
   }
 
-  removeTodo(index, todo) {
-    this.todos.splice(index, 1);
+  removeTask(task) {
+    this.tasks.splice(this.tasks.indexOf(task), 1);
   }
 }
 
-class Todo {
+class Task {
   constructor(title, desc, duedate, priority, complete) {
     this.title = title;
     this.desc = desc;
@@ -35,13 +32,13 @@ class Todo {
 function createProjectClass(title) {
   const project = new Project(title);
   arrProjects.push(project);
-  console.log(arrProjects);
   return project;
 }
 
 function createTaskClass(title, desc, duedate, priority, complete, projectIndex) {
-  const todo = new Todo(title, desc, duedate, priority, complete);
-  console.log(todo);
+  const task = new Task(title, desc, duedate, priority, complete);
+  arrProjects[projectIndex].tasks.push(task);
+  return task;
 }
 
 export {createProjectClass, createTaskClass, arrProjects}

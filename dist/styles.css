@@ -29,7 +29,8 @@ body > button {
   z-index: 1;
 }
 
-.task-form-container {
+.task-form-container,
+.project-form-container {
   position: absolute;
   display: none;
   z-index: 1;
@@ -40,6 +41,10 @@ body > button {
   height: 300px;
   width: 250px;
   margin: 0 auto;
+}
+
+.project-form-container {
+  height: 150px;
 }
 
 .form {
