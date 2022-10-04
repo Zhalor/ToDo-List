@@ -156,6 +156,10 @@ body > button {
   padding: 5px 8px;
 }
 
+.task-container > h2 {
+  text-align: center;
+}
+
 .task {
   display: flex;
   align-items: center;

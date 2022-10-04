@@ -37,7 +37,7 @@ function createProjectClass(title) {
 
 function createTaskClass(title, desc, duedate, priority, complete, projectIndex) {
   const task = new Task(title, desc, duedate, priority, complete);
-  arrProjects[projectIndex].tasks.push(task);
+  arrProjects[projectIndex].addTask(task);
   return task;
 }
 
