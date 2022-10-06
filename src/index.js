@@ -1,4 +1,4 @@
-import { createProject, createTask } from "./DOM";
+import { createProject, createTask, editTask, edit } from "./DOM";
 
 const projectBtn = document.getElementById('add-project-btn');
 const addTaskBtn = document.getElementById('add-task-btn');
@@ -16,8 +16,12 @@ projectBtn.addEventListener('click', () => {
 
 taskForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  console.log(e.target.dataset.projectIndex);
-  createTask(e.target.dataset.projectIndex);
+  if(edit === false) {
+    createTask(e.target.dataset.projectIndex);
+  } else if(edit === true) {
+    editTask(e.target.dataset.projectIndex, e.target.dataset.taskIndex, e.target[0].value, e.target[1].value,
+      e.target[2].value, e.target[3].value);
+  }
 });
 
 addTaskBtn.addEventListener('click', () => {

@@ -1,5 +1,8 @@
 import { createProjectClass, createTaskClass, arrProjects } from "./logic.js";
+let edit = false;
 let projectHeader = document.getElementById('project-header');
+const taskFormContainer = document.getElementById('task-form-container');
+const taskForm = document.getElementById('task-form');
 
 function createProject(projectName) {
   clearTask();
@@ -22,7 +25,8 @@ function createProject(projectName) {
     document.getElementById('task-form').dataset.projectIndex = projectIndex;
     clearTask();
     for(let task of project.tasks) {
-      appendTask(task.title, task.desc, task.duedate, task.priority, task.complete, projectIndex, projectName);
+      appendTask(task.title, task.desc, task.duedate, task.priority, task.complete, projectIndex,
+        arrProjects[projectIndex].tasks.indexOf(task));
     }
   });
 
@@ -74,13 +78,15 @@ function deleteProject(div, project) {
 function createTask(projectIndex) {
   const div = document.createElement('div');
   const label = document.createElement('label');
-  const input = document.createElement('input');
+  const checkbox = document.createElement('input');
   const pTitle = document.createElement('p');
   const pDesc = document.createElement('p');
   const pDueDate = document.createElement('p');
   const pPriority = document.createElement('p');
-  const btn = document.createElement('button');
+  const editBtn = document.createElement('span');
+  const deleteBtn = document.createElement('span');
 
+  let taskIndex = arrProjects[projectIndex].tasks.length;
   let titleValue = document.getElementById('title').value;
   let descValue = document.getElementById('desc').value;
   let dueDateValue = document.getElementById('due-date').value;
@@ -88,24 +94,45 @@ function createTask(projectIndex) {
 
   div.classList.add('task');
   div.setAttribute('data-project-index', projectIndex);
+  div.setAttribute('data-task-index', taskIndex);
   label.innerText = "Unfinished";
-  input.type = "checkbox";
-  input.classList.add('checkbox');
+  checkbox.type = "checkbox";
+  checkbox.classList.add('checkbox');
   pTitle.innerText = titleValue;
   pDesc.classList.add('desc');
   pDesc.innerText = descValue;
   pDueDate.innerText = dueDateValue;
   pPriority.innerText = priorityValue;
-  btn.classList.add('close-btn');
-  btn.innerText = "X";
+  let color = setPriorityColor(Number(priorityValue));
+  pPriority.style.backgroundColor = color;
+  editBtn.classList.add('icon', 'edit-icon');
+  deleteBtn.classList.add('icon', 'delete-icon');
 
-  btn.addEventListener('click', () => {
+  checkbox.addEventListener('click', () => {
+    if(task.complete === false) {
+      task.complete = true;
+      label.innerText = "Complete";
+      div.classList.add('complete');
+    } else {
+      task.complete = false;
+      label.innerText = "Unfinished";
+      div.classList.remove('complete');
+    }
+  });
+
+  editBtn.addEventListener('click', () => {
+    edit = true;
+    taskFormContainer.style.display = "block";
+    taskForm.dataset.taskIndex = taskIndex;
+    fillEditForm(pTitle.innerText, pDesc.innerText, pDueDate.innerText, pPriority.innerText);
+  });
+
+  deleteBtn.addEventListener('click', () => {
     deleteTask(div, task);
-  })
+  });
 
   document.getElementById('task-container').appendChild(div);
-  div.append(label, pTitle, pDesc, pDueDate, pPriority, btn);
-  label.appendChild(input);
+  div.append(checkbox, label, pTitle, pDesc, pDueDate, pPriority, editBtn, deleteBtn);
 
   document.getElementById('task-form').reset();
   document.getElementById('task-form-container').style.display = 'none';
@@ -114,7 +141,21 @@ function createTask(projectIndex) {
   console.log(arrProjects);
 }
 
-function appendTask(title, desc, duedate, priority, complete, projectIndex) {
+function setPriorityColor(num) {
+  console.log(num)
+  switch (num) {
+    case 1:
+      return "red";;
+    case 2:
+      return "orange";
+    case 3:
+      return "green";
+    case 4:
+      return "blue";
+ }
+}
+
+function appendTask(title, desc, duedate, priority, complete, projectIndex, taskIndex) {
   const div = document.createElement('div');
   const label = document.createElement('label');
   const input = document.createElement('input');
@@ -126,6 +167,7 @@ function appendTask(title, desc, duedate, priority, complete, projectIndex) {
 
   div.classList.add('task');
   div.setAttribute('data-project-index', projectIndex);
+  div.setAttribute('data-task-index', taskIndex);
   if(complete === true) {
     label.innerText = "Complete";
   } else {
@@ -140,6 +182,7 @@ function appendTask(title, desc, duedate, priority, complete, projectIndex) {
   pPriority.innerText = priority;
   btn.classList.add('close-btn');
   btn.innerText = "X";
+
 
   btn.addEventListener('click', () => {
     deleteTask(div, task);
@@ -157,12 +200,37 @@ function clearTask() {
   }
 }
 
+function fillEditForm(title, desc, duedate, priority) {
+  document.getElementById('title').value = title;
+  document.getElementById('desc').value = desc;
+  document.getElementById('due-date').value = duedate;
+  document.getElementById('priority').value = priority;
+}
+
+function editTask(projectIndex, taskIndex, ...formValues) {
+  const div = document.querySelector(`div.task[data-project-index="${taskIndex}"]`);
+  const node = div.childNodes;
+  let counter = 2;
+  for(let i in formValues) {
+    node[counter].innerText = formValues[i];
+    arrProjects[projectIndex].tasks[i] = formValues[i];
+    counter++
+  }
+  console.log(arrProjects[projectIndex].tasks)
+  taskForm.reset();
+  taskFormContainer.style.display = "none";
+}
+
 function deleteTask(div, task) {
   let index = div.dataset.projectIndex;
   div.remove();
   arrProjects[index].removeTask(task);
+  const tasks = document.querySelectorAll('.task');
+  for(let i in arrProjects[index].tasks) {
+    tasks[i].dataset.taskIndex = i;
+  }
 }
 
 createProject("Default");
 
-export { createProject, createTask }
+export { createProject, createTask, editTask, edit }
