@@ -10,7 +10,6 @@ class Project {
   }
   
   addTask(task) {
-    console.log(this.tasks);
     this.tasks.push(task);
   }
 

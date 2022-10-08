@@ -15,7 +15,7 @@
 body {
   position: relative;
   background-color: var(--dark-grey);
-  padding: 30px;
+  padding: 20px;
   height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -168,16 +168,27 @@ body > button {
 
 .task {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
   margin-top: 10px;
   background-color: var(--light-grey);
   border-radius: 5px;
-  padding: 0px 8px;
+  padding: 10px 8px 0px 8px;
   font-weight: bold;
   max-width: 100%;
   height: 40px;
 }
+
+.task-expand {
+  height: 120px;
+  transition: height .15s;
+}
+
+.task-reduce {
+  height: 40px;
+  transition: height .15s;
+}
+
 .task > p {
   border-left: 1px solid var(--grey);
   border-right: 1px solid var(--grey);
@@ -192,10 +203,23 @@ body > button {
   border-right: 2px solid var(--grey);
 }
 
-.desc {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.expand {
+  width: 24px;
+  height: 24px;
+  background-image: url(./icons/arrow.png);
+  background-position: center;
+}
+
+.rotate-down {
+  transform: rotate(90deg);
+  transition-property: transform;
+  transition-duration: .15s;
+}
+
+.rotate-up {
+  transform: rotate(0deg);
+  transition-property: transform;
+  transition-duration: .15s;
 }
 
 .checkbox {
@@ -212,20 +236,28 @@ body > button {
   width: calc(100% - 65px);
 }
 
-.close-btn {
-  background-color: var(--grey-light);
-  width: 20px;
-  height: 20px;
-  border: none;
-  color: var(--red);
-  font-weight: bold;
-  text-decoration: none;
+.desc {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task > .desc-expand {
+  overflow-wrap: break-word;
 }
 
 .icon {
   width: 32px;
   height: 32px;
   background-position: center;
+}
+
+.icon:hover {
+  transform: scale(1.05);
+}
+
+.icon:active {
+  transform: scale(.99);
 }
 
 .delete-icon {
