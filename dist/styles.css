@@ -7,15 +7,12 @@
 :root {
   --teal: #14c7c4;
   --grey: #1F1F1F;
-  --dark-grey: #0e0e0e;
-  --light-grey: #383838;
-  --red: #ff3838c2;
+  --dirty-white: #F7F7F7;
+  --white: #ffffff;
 }
 
 body {
   position: relative;
-  background-color: var(--dark-grey);
-  padding: 20px;
   height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -42,8 +39,10 @@ body > button {
   top: 20%;
   left: 0;
   right: 0;
-  background-color: var(--dark-grey);
-  height: 400px;
+  background-color: var(--dirty-white);
+  color: var(--grey);
+  border: 1px solid var(--grey);
+  height: 420px;
   width: 350px;
   margin: 0 auto;
 }
@@ -56,7 +55,6 @@ body > button {
 .form {
   display: flex;
   flex-direction: column;
-  color: white;
   padding: 8px;
 }
 
@@ -64,28 +62,81 @@ body > button {
   padding: 5px 0px;
 }
 
-.form > button {
+.form > input,
+.form > textarea {
+  outline: none;
+  padding: 2px;
+  margin-top: 5px;
+  border: 1px solid var(--grey);
+  transition-property: border-color;
+  transition-duration: .15s;
+}
+
+.form > select {
+  outline: none;
+  background-color: var(--white);
+  border: 1px solid var(--grey);
+  transition-property: border-color;
+  transition-duration: .15s;
+}
+
+.form > input:hover,
+.form > input:focus,
+.form > textarea:hover,
+.form > textarea:focus,
+.form > select:hover,
+.form > select:focus {
+  border-color: var(--teal);
+  background-color: var(--white);
+}
+
+.form > label:hover + input,
+.form > label:hover + textarea,
+.form > label:hover + select {
+  border-color: var(--grey);
+  background-color: var(--white);
+}
+
+.form-btn {
   margin-top: 15px;
-  padding: 5px;
+  padding: 8px;
   width: fit-content;
   align-self: center;
+  border-radius: 3px;
+  border: 1px solid var(--teal);
+  background-color: var(--teal);
+  color: var(--white);
+  font-size: .9rem;
+  font-weight: bold;
+}
+
+.form-btn:hover {
+  background-color: #19cfcc;
+  transform: scale(1.01);
+}
+
+.form-btn:active {
+  transform: scale(.99);
 }
 
 .container {
   display: grid;
   grid-template-rows: 65px minmax(600px, 100%);
-  grid-template-columns: minmax(250px, 15vw) minmax(500px, 85vw);
+  grid-template-columns: minmax(250px, 300px) minmax(500px, 85vw);
   height: 100%;
-  gap: 20px;
 }
 
 .projects-title,
 .task-title,
 .projects-container,
 .task-container {
-  background-color: var(--grey);
+  background-color: var(--white);
   color: var(--teal);
-  border-radius: 3px;
+}
+
+.container > .projects-title,
+.container > .projects-container {
+  background-color: var(--dirty-white);
 }
 
 .projects-title {
@@ -95,11 +146,16 @@ body > button {
   padding: 10px;
 }
 
+.projects-title > h1 {
+  flex: 1;
+  text-align: center;
+}
+
 .add-btn {
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background-color: var(--grey);
+  background-color: var(--dirty-white);
   border: 2px solid var(--teal);
   color: var(--teal);
   font-size: 1.5rem;
@@ -110,6 +166,9 @@ body > button {
   justify-content: center;
   align-items: center;
   position: relative;
+  font-size: 1.1rem;
+  color: var(--white);
+  background: linear-gradient(to right, var(--teal), #00E6AA)
 }
 
 .task-title > .add-btn {
@@ -127,80 +186,83 @@ body > button {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  background-color: var(--light-grey);
-  border-radius: 5px;
+  background-color: var(--white);
+  border-radius: 2px;
   font-weight: bold;
   height: 40px;
   padding: 0px 8px;
+  box-shadow: 0px 0px 5px 0px rgb(221, 221, 221);
 }
 
-.project > p,
-.project > input {
+.project > p {
   flex: 1;
   text-align: center;
-  height: 20px;
-}
-
-.default-project {
-  margin-right: 20px;
-}
-
-.project > input {
-  outline: none;
-  border: 1px solid var(--light-grey);
-}
-
-.project > input:focus {
-  border: 1px solid var(--teal);
-}
-
-.project > .input-error {
-  border: 1px solid red;
 }
 
 .task-container {
-  padding: 5px 8px;
+  padding: 30px 100px;
 }
 
-.task-container > h2 {
+.project-header {
   text-align: center;
+  padding-bottom: 30px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--dirty-white);
 }
 
 .task {
   display: flex;
   align-items: flex-start;
   position: relative;
-  margin-top: 10px;
-  background-color: var(--light-grey);
+  background-color: var(--dirty-white);
+  margin-bottom: 10px;
   border-radius: 5px;
-  padding: 10px 8px 0px 8px;
+  padding: 4px 8px 0px 8px;
   font-weight: bold;
   max-width: 100%;
   height: 40px;
+  box-shadow: 0px 0px 5px 0px rgb(221, 221, 221);
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+.task:hover {
+  background-color: #f0f0f0;
 }
 
 .task-expand {
   height: 120px;
-  transition: height .15s;
+  transition: height .15s, background-color .5s;
 }
 
 .task-reduce {
   height: 40px;
-  transition: height .15s;
+  transition: height .15s, background-color .5s;
+}
+
+.task > input {
+  margin-top: 9px;
 }
 
 .task > p {
-  border-left: 1px solid var(--grey);
-  border-right: 1px solid var(--grey);
   padding: 0px 8px;
+  margin-top: 7px;
 }
 
 .task > p:first-of-type {
   border-left: 2px solid var(--grey);
+  border-right: 2px solid var(--grey);
+}
+
+.task > p:nth-of-type(3) {
+  border-left: 2px solid var(--grey);
+  border-right: 2px solid var(--grey);
 }
 
 .task > p:last-of-type {
   border-right: 2px solid var(--grey);
+  color: var(--white);
+  margin-right: 6px;;
 }
 
 .expand {
@@ -208,6 +270,13 @@ body > button {
   height: 24px;
   background-image: url(./icons/arrow.png);
   background-position: center;
+  margin-top:3px;
+}
+
+.checkbox {
+  margin-left: 5px;
+  margin-right: 8px;
+  margin-top:7px;
 }
 
 .rotate-down {
@@ -222,18 +291,10 @@ body > button {
   transition-duration: .15s;
 }
 
-.checkbox {
-  margin-left: 5px;
-  margin-right: 8px;
-}
-
-.complete:before {
-  content: "";
-  position: absolute;
-  top: 48%;
-  left: 35px;
-  border: 1px solid red;
-  width: calc(100% - 65px);
+.complete {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: black;
 }
 
 .desc {
@@ -253,7 +314,7 @@ body > button {
 }
 
 .icon:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .icon:active {
@@ -282,11 +343,6 @@ body > button {
 
 .create-project-btn:hover {
   background-color: var(--teal);
-  transform: scale(1.1);
-}
-
-.close:hover {
-  color: #ff1f1f;
   transform: scale(1.1);
 }
 

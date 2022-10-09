@@ -8,7 +8,6 @@ function createProject(projectName) {
   clearTask();
   const div = document.createElement('div');
   const p = document.createElement('p');
-  const editbtn = document.createElement('span');
   const deleteBtn = document.createElement('span');
 
   projectHeader.innerText = projectName;
@@ -16,7 +15,6 @@ function createProject(projectName) {
   div.setAttribute('data-project-index', arrProjects.length);
   p.classList.add('mouse-effect');
   p.innerText = projectName;
-  editbtn.classList.add('icon', 'edit-icon');
   deleteBtn.classList.add('icon', 'delete-icon');
   document.getElementById('add-project-btn').disabled = false;
 
@@ -26,8 +24,7 @@ function createProject(projectName) {
     document.getElementById('task-form').dataset.projectIndex = projectIndex;
     clearTask();
     for(let task of project.tasks) {
-      appendTask(task.title, task.desc, task.duedate, task.priority, task.complete, projectIndex,
-        arrProjects[projectIndex].tasks.indexOf(task));
+      appendTask(projectIndex, arrProjects[projectIndex].tasks.indexOf(task));
     }
   });
 
@@ -47,7 +44,7 @@ function createProject(projectName) {
 
   document.getElementById('task-container').appendChild(projectHeader);
   document.getElementById('projects-container').appendChild(div);
-  div.append(p, editbtn, deleteBtn);
+  div.append(p, deleteBtn);
 
   document.getElementById('task-form').dataset.projectIndex = div.dataset.projectIndex;
   document.getElementById('project-form').reset();
@@ -99,6 +96,7 @@ function createTask(projectIndex) {
   div.setAttribute('data-task-index', taskIndex);
   expandBtn.classList.add('expand');
   label.innerText = "Unfinished";
+  label.classList.add('checkbox');
   checkbox.type = "checkbox";
   checkbox.classList.add('checkbox');
   pTitle.innerText = titleValue;
@@ -107,7 +105,7 @@ function createTask(projectIndex) {
   pDueDate.innerText = dueDateValue;
   pPriority.innerText = priorityValue;
   let color = setPriorityColor(Number(priorityValue));
-  pPriority.style.backgroundColor = color;
+  pPriority.style.color = color;
   editBtn.classList.add('icon', 'edit-icon');
   deleteBtn.classList.add('icon', 'delete-icon');
 
@@ -182,7 +180,7 @@ function setPriorityColor(num) {
  }
 }
 
-function appendTask(title, desc, duedate, priority, complete, projectIndex, taskIndex) {
+function appendTask(projectIndex, taskIndex) {
   const div = document.createElement('div');
   const expandBtn = document.createElement('span');
   const label = document.createElement('label');
@@ -193,26 +191,30 @@ function appendTask(title, desc, duedate, priority, complete, projectIndex, task
   const pPriority = document.createElement('p');
   const editBtn = document.createElement('span');
   const deleteBtn = document.createElement('span');
+  let task = arrProjects[projectIndex].tasks[taskIndex];
 
   div.classList.add('task');
   div.setAttribute('data-project-index', projectIndex);
   div.setAttribute('data-task-index', taskIndex);
   checkbox.type = "checkbox";
   checkbox.classList.add('checkbox');
-  if(complete === true) {
+  if(task.complete === true) {
     label.innerText = "Complete";
     checkbox.checked = true;
   } else {
     label.innerText = "Unfinished";
   }
+  label.classList.add('checkbox');
   expandBtn.classList.add('expand');
   checkbox.type = "checkbox";
   checkbox.classList.add('checkbox');
-  pTitle.innerText = title;
+  pTitle.innerText = task.title;
   pDesc.classList.add('desc');
-  pDesc.innerText = desc;
-  pDueDate.innerText = duedate;
-  pPriority.innerText = priority;
+  pDesc.innerText = task.desc;
+  pDueDate.innerText = task.duedate;
+  let color = setPriorityColor(Number(task.priority));
+  pPriority.style.color = color;
+  pPriority.innerText = task.priority;
   editBtn.classList.add('icon', 'edit-icon');
   deleteBtn.classList.add('icon', 'delete-icon');
 
@@ -271,14 +273,18 @@ function fillEditForm(title, desc, duedate, priority) {
 
 function editTask(projectIndex, taskIndex, ...formValues) {
   const div = document.querySelector(`div.task[data-task-index="${taskIndex}"]`);
-  console.log(div);
+  const task = arrProjects[projectIndex].tasks[taskIndex];
   const node = div.childNodes;
-  let counter = 3;
-  for(let i in formValues) {
-    node[counter].innerText = formValues[i];
-    arrProjects[projectIndex].tasks[taskIndex][i] = formValues[i];
-    counter++
-  }
+  let color = setPriorityColor(Number(formValues[3]));
+  node[6].style.color = color;
+  node[3].innerText = formValues[0];
+  node[4].innerText = formValues[1];
+  node[5].innerText = formValues[2];
+  node[6].innerText = formValues[3];
+  task.title = formValues[0];
+  task.desc = formValues[1];
+  task.duedate = formValues[2];
+  task.priority = formValues[3];
   taskForm.reset();
   taskFormContainer.style.display = "none";
   edit = false;
