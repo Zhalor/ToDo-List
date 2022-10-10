@@ -1,8 +1,9 @@
 import { createProjectClass, createTaskClass, arrProjects } from "./logic.js";
 let edit = false;
 let projectHeader = document.getElementById('project-header');
-const taskFormContainer = document.getElementById('task-form-container');
 const taskForm = document.getElementById('task-form');
+const projectModal = document.getElementById('project-modal');
+const taskModal = document.getElementById('task-modal');
 
 function createProject(projectName) {
   clearTask();
@@ -48,7 +49,7 @@ function createProject(projectName) {
 
   document.getElementById('task-form').dataset.projectIndex = div.dataset.projectIndex;
   document.getElementById('project-form').reset();
-  document.getElementById('project-form-container').style.display = 'none';
+  projectModal.style.display = "none";
 
   const project = createProjectClass(p.innerText);
 }
@@ -149,7 +150,7 @@ function createTask(projectIndex) {
     console.log(arrProjects[projectIndex].tasks.indexOf(task));
     console.log(arrProjects);
     edit = true;
-    taskFormContainer.style.display = "block";
+    taskModal.style.display = "block";
     taskForm.dataset.taskIndex = arrProjects[projectIndex].tasks.indexOf(task);
     fillEditForm(pTitle.innerText, pDesc.innerText, pDueDate.innerText, pPriority.innerText);
   });
@@ -162,7 +163,7 @@ function createTask(projectIndex) {
   div.append(expandBtn, checkbox, label, pTitle, pDesc, pDueDate, pPriority, editBtn, deleteBtn);
 
   document.getElementById('task-form').reset();
-  document.getElementById('task-form-container').style.display = 'none';
+  taskModal.style.display = "none";
 
   const task = createTaskClass(titleValue, descValue, dueDateValue, priorityValue, false, projectIndex);
 }
@@ -244,7 +245,7 @@ function appendTask(projectIndex, taskIndex) {
 
   editBtn.addEventListener('click', () => {
     edit = true;
-    taskFormContainer.style.display = "block";
+    taskModal.style.display = "block";
     taskForm.dataset.taskIndex = taskIndex;
     fillEditForm(pTitle.innerText, pDesc.innerText, pDueDate.innerText, pPriority.innerText);
   });
@@ -286,7 +287,7 @@ function editTask(projectIndex, taskIndex, ...formValues) {
   task.duedate = formValues[2];
   task.priority = formValues[3];
   taskForm.reset();
-  taskFormContainer.style.display = "none";
+  taskModal.style.display = "none";
   edit = false;
 }
 

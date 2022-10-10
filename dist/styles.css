@@ -26,6 +26,18 @@ body > button {
   z-index: 1;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 #desc {
   resize: none;
   padding: 5px;
@@ -34,7 +46,6 @@ body > button {
 .task-form-container,
 .project-form-container {
   position: absolute;
-  display: none;
   z-index: 1;
   top: 20%;
   left: 0;
@@ -48,14 +59,16 @@ body > button {
 }
 
 .project-form-container {
-  height: 150px;
+  height: 130px;
   width: 250px;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
   padding: 8px;
+}
+
+.form > * {
+  display: block;
 }
 
 .form > label {
@@ -70,6 +83,7 @@ body > button {
   border: 1px solid var(--grey);
   transition-property: border-color;
   transition-duration: .15s;
+  width: 100%;
 }
 
 .form > select {
@@ -78,6 +92,7 @@ body > button {
   border: 1px solid var(--grey);
   transition-property: border-color;
   transition-duration: .15s;
+  width: 100%;
 }
 
 .form > input:hover,
@@ -98,7 +113,7 @@ body > button {
 }
 
 .form-btn {
-  margin-top: 15px;
+  margin: 10px auto 0px auto;
   padding: 8px;
   width: fit-content;
   align-self: center;
@@ -117,6 +132,20 @@ body > button {
 
 .form-btn:active {
   transform: scale(.99);
+}
+
+.close-btn {
+  color: var(--grey);
+  float: right;
+  font-size: .9rem;
+  padding-top: 6px;
+  transition-property: color;
+  transition-duration: .15s;
+}
+
+.close-btn:hover {
+  color: rgba(255, 21, 21, 0.8);
+  cursor: pointer;
 }
 
 .container {

@@ -2,8 +2,31 @@ import { createProject, createTask, editTask, edit } from "./DOM";
 
 const projectBtn = document.getElementById('add-project-btn');
 const addTaskBtn = document.getElementById('add-task-btn');
-const taskForm = document.getElementById('task-form');
 const projectForm = document.getElementById('project-form');
+const taskForm = document.getElementById('task-form');
+const projectModal = document.getElementById('project-modal');
+const taskModal = document.getElementById('task-modal');
+const closeBtn = document.querySelectorAll('.close-btn');
+
+window.addEventListener('click', (e) => {
+  if (e.target == projectModal) {
+    projectModal.style.display = "none";
+    projectForm.reset();
+  } else if(e.target == taskModal) {
+    taskModal.style.display = "none";
+    taskForm.reset();
+  }
+});
+
+closeBtn[0].addEventListener('click', () => {
+  projectModal.style.display = "none";
+  projectForm.reset();
+});
+
+closeBtn[1].addEventListener('click', () => {
+  taskModal.style.display = "none";
+  taskForm.reset();
+});
 
 projectForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -11,7 +34,7 @@ projectForm.addEventListener('submit', (e) => {
 });
 
 projectBtn.addEventListener('click', () => {
-  document.getElementById('project-form-container').style.display = 'block';
+  projectModal.style.display = "block";
 });
 
 taskForm.addEventListener('submit', (e) => {
@@ -27,6 +50,6 @@ taskForm.addEventListener('submit', (e) => {
 addTaskBtn.addEventListener('click', () => {
   const projects = document.querySelectorAll(".project");
   if(projects.length > 0) {
-    document.getElementById('task-form-container').style.display = 'block';
+    taskModal.style.display = "block";
   }
 });
