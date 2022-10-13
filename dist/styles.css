@@ -151,7 +151,7 @@ body > button {
 .container {
   display: grid;
   grid-template-rows: 65px minmax(600px, 100%);
-  grid-template-columns: minmax(250px, 300px) minmax(500px, 85vw);
+  grid-template-columns: minmax(250px, 300px) minmax(800px, 85vw);
   height: 100%;
 }
 

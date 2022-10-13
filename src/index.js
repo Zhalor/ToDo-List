@@ -35,6 +35,7 @@ projectForm.addEventListener('submit', (e) => {
 
 projectBtn.addEventListener('click', () => {
   projectModal.style.display = "block";
+  document.getElementById('project-name').focus();
 });
 
 taskForm.addEventListener('submit', (e) => {
@@ -51,5 +52,6 @@ addTaskBtn.addEventListener('click', () => {
   const projects = document.querySelectorAll(".project");
   if(projects.length > 0) {
     taskModal.style.display = "block";
+    document.getElementById('task-title').focus();
   }
 });

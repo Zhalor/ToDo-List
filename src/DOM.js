@@ -1,4 +1,4 @@
-import { createProjectClass, createTaskClass, arrProjects } from "./logic.js";
+import { createProjectClass, createTaskClass, setLocalStorage, arrProjects } from "./logic.js";
 let edit = false;
 let projectHeader = document.getElementById('project-header');
 const taskForm = document.getElementById('task-form');
@@ -37,6 +37,7 @@ function createProject(projectName) {
         appendTask(task.title, task.desc, task.duedate, task.priority, task.complete, projectIndex - 1, projectName);
       }
     }
+    setLocalStorage();
   });
 
   while(div.hasChildNodes()) {
@@ -51,7 +52,48 @@ function createProject(projectName) {
   document.getElementById('project-form').reset();
   projectModal.style.display = "none";
 
-  const project = createProjectClass(p.innerText);
+  const project = createProjectClass(p.innerText, []);
+  setLocalStorage();
+}
+
+function appendProject(project) {
+  const div = document.createElement('div');
+  const p = document.createElement('p');
+  const deleteBtn = document.createElement('span');
+
+  div.classList.add('project');
+  div.setAttribute('data-project-index', arrProjects.indexOf(project));
+  p.classList.add('mouse-effect');
+  p.innerText = project.title;
+  deleteBtn.classList.add('icon', 'delete-icon');
+
+  p.addEventListener('click', () => {
+    projectHeader.innerText = project.title;
+    let projectIndex = arrProjects.indexOf(project);
+    document.getElementById('task-form').dataset.projectIndex = projectIndex;
+    clearTask();
+    for(let task of project.tasks) {
+      appendTask(projectIndex, arrProjects[projectIndex].tasks.indexOf(task));
+    }
+  });
+
+  deleteBtn.addEventListener('click', () => {
+    let projectIndex = arrProjects.indexOf(project);
+    deleteProject(div, project);
+    if(projectIndex > 0) {
+      for(let task of arrProjects[projectIndex - 1].tasks) {
+        appendTask(task.title, task.desc, task.duedate, task.priority, task.complete, projectIndex - 1, project.title);
+      }
+    }
+    setLocalStorage();
+  });
+
+  while(div.hasChildNodes()) {
+    div.removeChild(div.lastChild);
+  }
+
+  document.getElementById('projects-container').appendChild(div);
+  div.append(p, deleteBtn);
 }
 
 function deleteProject(div, project) {
@@ -72,6 +114,7 @@ function deleteProject(div, project) {
   for(let i in arrProjects) {
     projects[i].setAttribute('data-project-index', i);
   }
+  setLocalStorage();
 }
 
 function createTask(projectIndex) {
@@ -87,10 +130,10 @@ function createTask(projectIndex) {
   const deleteBtn = document.createElement('span');
 
   let taskIndex = arrProjects[projectIndex].tasks.length;
-  let titleValue = document.getElementById('title').value;
-  let descValue = document.getElementById('desc').value;
-  let dueDateValue = document.getElementById('due-date').value;
-  let priorityValue = document.getElementById('priority').value;
+  let titleValue = document.getElementById('task-title').value;
+  let descValue = document.getElementById('task-desc').value;
+  let dueDateValue = document.getElementById('task-due-date').value;
+  let priorityValue = document.getElementById('task-priority').value;
 
   div.classList.add('task');
   div.setAttribute('data-project-index', projectIndex);
@@ -144,11 +187,10 @@ function createTask(projectIndex) {
       label.innerText = "Unfinished";
       div.classList.remove('complete');
     }
+    setLocalStorage();
   });
 
   editBtn.addEventListener('click', () => {
-    console.log(arrProjects[projectIndex].tasks.indexOf(task));
-    console.log(arrProjects);
     edit = true;
     taskModal.style.display = "block";
     taskForm.dataset.taskIndex = arrProjects[projectIndex].tasks.indexOf(task);
@@ -166,6 +208,7 @@ function createTask(projectIndex) {
   taskModal.style.display = "none";
 
   const task = createTaskClass(titleValue, descValue, dueDateValue, priorityValue, false, projectIndex);
+  setLocalStorage();
 }
 
 function setPriorityColor(num) {
@@ -209,6 +252,13 @@ function appendTask(projectIndex, taskIndex) {
   expandBtn.classList.add('expand');
   checkbox.type = "checkbox";
   checkbox.classList.add('checkbox');
+  if(task.complete === true) {
+    label.innerText = "Complete";
+    div.classList.add('complete');
+  } else {
+    label.innerText = "Unfinished";
+    div.classList.remove('complete');
+  }
   pTitle.innerText = task.title;
   pDesc.classList.add('desc');
   pDesc.innerText = task.desc;
@@ -241,6 +291,20 @@ function appendTask(projectIndex, taskIndex) {
       div.classList.add('task-expand');
       pDesc.classList.add('desc-expand');
     }
+
+  });
+
+  checkbox.addEventListener('click', () => {
+    if(task.complete === false) {
+      task.complete = true;
+      label.innerText = "Complete";
+      div.classList.add('complete');
+    } else {
+      task.complete = false;
+      label.innerText = "Unfinished";
+      div.classList.remove('complete');
+    }
+    setLocalStorage();
   });
 
   editBtn.addEventListener('click', () => {
@@ -266,10 +330,10 @@ function clearTask() {
 }
 
 function fillEditForm(title, desc, duedate, priority) {
-  document.getElementById('title').value = title;
-  document.getElementById('desc').value = desc;
-  document.getElementById('due-date').value = duedate;
-  document.getElementById('priority').value = priority;
+  document.getElementById('task-title').value = title;
+  document.getElementById('task-desc').value = desc;
+  document.getElementById('task-due-date').value = duedate;
+  document.getElementById('task-priority').value = priority;
 }
 
 function editTask(projectIndex, taskIndex, ...formValues) {
@@ -289,6 +353,7 @@ function editTask(projectIndex, taskIndex, ...formValues) {
   taskForm.reset();
   taskModal.style.display = "none";
   edit = false;
+  setLocalStorage();
 }
 
 function deleteTask(div, task) {
@@ -299,8 +364,12 @@ function deleteTask(div, task) {
   for(let i in arrProjects[index].tasks) {
     tasks[i].dataset.taskIndex = i;
   }
+  setLocalStorage();
 }
+setTimeout(() => {
+  if(localStorage.length === 0) {
+    createProject("Default");
+  }
+}, 200);
 
-createProject("Default");
-
-export { createProject, createTask, editTask, edit }
+export { createProject, createTask, editTask, appendProject, appendTask, edit }
