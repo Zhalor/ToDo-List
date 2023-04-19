@@ -12,7 +12,6 @@ function getLocalStorage() {
     return [];
   } else {
     const storageValue = JSON.parse(localStorage.getItem('projects'));
-      console.log('storageValue :', storageValue);
       for(let project of storageValue) {
         Project.prototype.removeProject.call(project);
         Project.prototype.addTask.call(project);
